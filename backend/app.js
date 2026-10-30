@@ -37,10 +37,24 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+// Do not let database-backed API routes race the initial MongoDB connection.
+app.use(async (req, res, next) => {
+  try {
+    await dbConnection();
+    next();
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    res.status(503).json({
+      success: false,
+      message: "Database is temporarily unavailable. Please try again shortly.",
+    });
+  }
+});
+
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
-dbConnection();
 
 app.use(errorMiddleware);
 export default app;
