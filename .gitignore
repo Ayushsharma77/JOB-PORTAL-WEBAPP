@@ -1,0 +1,19 @@
+# Dependencies and build output
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+coverage/
+
+# Local environment variables and secrets
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+backend/config/config.env
+
+# Local/editor files
+.DS_Store
+Thumbs.db
+*.log
