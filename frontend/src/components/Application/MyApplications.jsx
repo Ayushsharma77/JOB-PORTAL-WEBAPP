@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../main";
-import axios from "axios";
+import api from "../../lib/api";
 import toast from "react-hot-toast";
 import { useNavigate, Navigate } from "react-router-dom";
 import ResumeModal from "./ResumeModal";
@@ -28,15 +28,9 @@ const MyApplications = () => {
     try {
       let res;
       if (user && user.role === "Employer") {
-        res = await axios.get(
-          "http://localhost:4000/api/v1/application/employer/getall",
-          { withCredentials: true }
-        );
+        res = await api.get("/application/employer/getall");
       } else {
-        res = await axios.get(
-          "http://localhost:4000/api/v1/application/jobseeker/getall",
-          { withCredentials: true }
-        );
+        res = await api.get("/application/jobseeker/getall");
       }
       setApplications(res.data.applications);
     } catch (error) {
@@ -58,11 +52,7 @@ const MyApplications = () => {
     setUpdatingIds((prev) => new Set(prev).add(id));
 
     try {
-      const res = await axios.put(
-        `http://localhost:4000/api/v1/application/status/${id}`,
-        { status },
-        { withCredentials: true }
-      );
+      const res = await api.put(`/application/status/${id}`, { status });
       toast.success(res.data.message);
       fetchApplications();
     } catch (error) {
@@ -84,10 +74,7 @@ const MyApplications = () => {
 
   const deleteApplication = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:4000/api/v1/application/delete/${id}`,
-        { withCredentials: true }
-      );
+      const res = await api.delete(`/application/delete/${id}`);
       toast.success(res.data.message);
       setApplications((prevApplication) =>
         prevApplication.filter((application) => application._id !== id)

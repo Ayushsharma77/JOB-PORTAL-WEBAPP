@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../lib/api";
 import { Link, Navigate } from "react-router-dom";
 import { Context } from "../../main";
 
@@ -8,10 +8,8 @@ const Jobs = () => {
   const { isAuthorized } = useContext(Context);
   useEffect(() => {
     try {
-      axios
-        .get("http://localhost:4000/api/v1/job/getall", {
-          withCredentials: true,
-        })
+      api
+        .get("/job/getall")
         .then((res) => {
           setJobs(res.data);
         });

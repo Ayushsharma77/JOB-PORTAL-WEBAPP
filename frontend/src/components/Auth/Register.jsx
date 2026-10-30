@@ -5,7 +5,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaPhoneFlip } from "react-icons/fa6";
 import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../lib/api";
 import toast from "react-hot-toast";
 import { Context } from "../../main";
 import Brand from "../Layout/Brand";
@@ -25,8 +25,8 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/register",
+      const { data } = await api.post(
+        "/user/register",
         { name, phone, email, role, password },
         {
           headers: {

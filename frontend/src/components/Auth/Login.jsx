@@ -3,7 +3,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, Navigate } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
-import axios from "axios";
+import api from "../../lib/api";
 import toast from "react-hot-toast";
 import { Context } from "../../main";
 import Brand from "../Layout/Brand";
@@ -21,8 +21,8 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/login",
+      const { data } = await api.post(
+        "/user/login",
         { email, password, role },
         {
           headers: {

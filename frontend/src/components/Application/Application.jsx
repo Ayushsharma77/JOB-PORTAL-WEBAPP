@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../lib/api";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
@@ -71,8 +71,8 @@ const Application = () => {
     formData.append("jobId", id);
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:4000/api/v1/application/post",
+      const { data } = await api.post(
+        "/application/post",
         formData,
         {
           withCredentials: true,
